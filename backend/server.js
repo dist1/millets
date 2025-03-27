@@ -3,12 +3,12 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv"); 
 const OpenAI = require("openai");
 const { chatbotResponse } = require("./controllers/chatbotController");
 
-const app = express();
-dotenv.config();
+const app = express();  
+dotenv.config();  
 // Middleware
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -21,11 +21,10 @@ connectDB().catch((err) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
-
 // Default Route (Health Check)
 app.get("/", (req, res) => {
   res.send("🚀 API is running...");
-});
+}); 
 
 // Start Server
 const PORT = process.env.PORT || 5000;
