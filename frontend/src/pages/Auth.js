@@ -196,9 +196,9 @@ const Auth = () => {
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const storedUsername = localStorage.getItem("username");
+
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
+    const storedUsername = localStorage.getItem("Username");
     if (storedUsername) {
       console.log("User already logged in, redirecting to home...");
       navigate("/home");
