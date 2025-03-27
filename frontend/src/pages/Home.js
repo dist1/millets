@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
+import { getGeminiResponse } from "../utils/geminiAPI";
 
 const Home = () => {
     const [messages, setMessages] = useState([]);
@@ -50,32 +51,21 @@ const Home = () => {
 
     const sendMessage = async () => {
         const message = inputValue.trim();
-        if (message === "") return;
-    
+        if (!message) return;
+
         setMessages((prev) => [...prev, { text: message, sender: "user" }]);
         setInputValue("");
         setIsTyping(true);
-    
-        // Simulating AI Response
-        const randomResponses = [
-            "That's an interesting question!",
-            "I'm not sure, but I'll try to help!",
-            "Farming is fascinating, isn't it?",
-            "Can you clarify that for me?",
-            "I love talking about agriculture!",
-            "Let's explore that together.",
-            "That's a great topic!",
-            "Hmm... Let me think about that.",
-            "Sustainable farming is the future!",
-            "That's a common concern among farmers."
-        ];
-    
-        setTimeout(() => {
-            const randomReply = randomResponses[Math.floor(Math.random() * randomResponses.length)];
-            setMessages((prev) => [...prev, { text: randomReply, sender: "ai" }]);
-            setIsTyping(false);
-        }, 1500);  // Simulate typing delay
-    };            
+
+        try {
+            const aiReply = await getGeminiResponse(message);
+            setMessages((prev) => [...prev, { text: aiReply, sender: "ai" }]);
+        } catch (error) {
+            console.error("AI Error:", error);
+        }
+
+        setIsTyping(false);
+    };      
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
