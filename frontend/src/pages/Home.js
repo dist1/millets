@@ -7,7 +7,6 @@ const Home = () => {
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [image, setImage] = useState(null);
-    const [imageName, setImageName] = useState(""); // ✅ Added state to store uploaded image name
     const chatInputRef = useRef(null);
     const chatContainerRef = useRef(null);
     const lastMessageRef = useRef(null);
@@ -56,7 +55,6 @@ const Home = () => {
         setMessages((prev) => [...prev, { text: message, sender: "user", image: image?.name }]);
         setInputValue("");
         setImage(null);
-        setImageName(""); // ✅ Reset image name after sending
         setIsTyping(true);
 
         try {
@@ -76,10 +74,7 @@ const Home = () => {
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        if (file) {
-            setImage(file);
-            setImageName(file.name); // ✅ Store uploaded image name
-        }
+        if (file) setImage(file);
     };
 
     const handleKeyDown = (e) => {
@@ -116,10 +111,15 @@ const Home = () => {
                             </div>
                         ))}
 
+                        {/* Typing Indicator */}
                         {isTyping && (
                             <div className="flex justify-start">
-                                <div className="p-4 bg-[#F6F3EE] rounded-lg max-w-md">
-                                    <p className="text-sm text-[#A18249] font-bold">...</p>
+                                <div className="p-3 bg-[#F6F3EE] rounded-lg max-w-md">
+                                    <div className="typing-indicator flex space-x-1">
+                                        <span className="dot bg-[#A18249]"></span>
+                                        <span className="dot bg-[#A18249]"></span>
+                                        <span className="dot bg-[#A18249]"></span>
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -147,15 +147,37 @@ const Home = () => {
                             🚀
                         </button>
                     </div>
-
-                    {/* ✅ Image Upload Confirmation */}
-                    {imageName && (
-                        <p className="text-xs text-green-600 font-semibold absolute bottom-16 left-36">
-                            ✅ {imageName} uploaded
-                        </p>
-                    )}
                 </div>
             </div>
+
+            {/* Typing Indicator CSS */}
+            <style>
+                {`
+                .typing-indicator .dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    display: inline-block;
+                    animation: typing 1.5s infinite;
+                }
+
+                .typing-indicator .dot:nth-child(1) {
+                    animation-delay: 0s;
+                }
+                .typing-indicator .dot:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+                .typing-indicator .dot:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+
+                @keyframes typing {
+                    0% { transform: scale(1); opacity: 0.3; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(1); opacity: 0.3; }
+                }
+                `}
+            </style>
         </div>
     );
 };
