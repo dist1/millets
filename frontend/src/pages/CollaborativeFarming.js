@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileDropdown from "../components/ProfileDropdown";
+
 import Header from "../components/Header"; // Import Header Component
 
 const CollaborativeFarming = () => {
@@ -149,6 +150,7 @@ const CollaborativeFarming = () => {
   };
 
   return (
+
     <div
       className="relative flex min-h-screen flex-col bg-white overflow-hidden rounded-lg shadow-md"
       style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}
@@ -295,10 +297,9 @@ const CollaborativeFarming = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Discussion Forum
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Discussion Forum</h2>
           {dummyDiscussions.map((discussion) => (
+
             <div
               key={discussion._id}
               className="border p-4 mt-4 rounded-lg shadow-sm"
@@ -306,16 +307,17 @@ const CollaborativeFarming = () => {
               <h3 className="font-semibold text-lg text-green-600 mb-2">
                 {discussion.title}
               </h3>
+
               <p className="text-gray-700">{discussion.content}</p>
             </div>
           ))}
         </div>
 
+        {/* Project Collaboration */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Project Collaboration
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Project Collaboration</h2>
           {dummyProjects.map((project) => (
+
             <div
               key={project._id}
               className="border p-4 mt-4 rounded-lg shadow-sm"
@@ -330,15 +332,31 @@ const CollaborativeFarming = () => {
               >
                 Join Project
               </button>
+
             </div>
           ))}
         </div>
 
+        {/* Success Stories */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Success Stories</h2>
+          {dummySuccessStories.map((story) => (
+            <div key={story._id} className="border p-4 mt-4 rounded-lg shadow-sm flex">
+              <img src={story.imageUrl} alt={story.title} className="w-1/3 mr-4 rounded-lg" />
+              <div className="w-2/3">
+                <h3 className="font-semibold text-lg text-yellow-600 mb-2">{story.title}</h3>
+                <p className="text-gray-700">{story.content}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Resources */}
+
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Resources
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Resources</h2>
           {dummyResources.map((resource) => (
+
             <div
               key={resource._id}
               className="border p-4 mt-4 rounded-lg shadow-sm"
@@ -346,6 +364,7 @@ const CollaborativeFarming = () => {
               <h3 className="font-semibold text-lg text-indigo-600 mb-2">
                 {resource.title}
               </h3>
+
               <p className="text-gray-700 mb-2">{resource.details}</p>
               {resource.fileUrl && (
                 <a

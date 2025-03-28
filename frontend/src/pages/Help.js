@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import Header from "../components/Header"; // Import Header Component
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 const faqs = [
   { question: "How can I check soil quality?", answer: "You can use our AI tool to analyze soil samples and get detailed recommendations." },
@@ -25,54 +26,82 @@ export default function HelpSupport() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      {/* Include Header */}
-      <Header activePage="Help" logoutUser={() => {}} /> {/* Pass activePage as 'News' */}
-      <h1 className="text-3xl font-bold text-center text-green-700 mt-16">Help & Support</h1>
+    <div
+      className="relative flex flex-col min-h-screen bg-white overflow-hidden"
+      style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}
+    >
+      {/* Fixed Header */}
+      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+        <Header activePage="Help" logoutUser={logoutUser} />
+      </div>
 
-      {/* FAQ Section */}
-      <div className="max-w-3xl mx-auto mt-6">
-        <h2 className="text-xl font-semibold text-gray-800">Frequently Asked Questions</h2>
-        <div className="mt-4 space-y-3">
-          {faqs.map((faq, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow">
-              <button className="flex justify-between items-center w-full text-left" onClick={() => toggleFAQ(index)}>
-                <span className="font-medium text-gray-700">{faq.question}</span>
-                {openFAQ === index ? <FaChevronUp /> : <FaChevronDown />}
-              </button>
-              {openFAQ === index && <p className="mt-2 text-gray-600">{faq.answer}</p>}
+      {/* Help & Support Section */}
+      <div className="flex flex-1 flex-col overflow-y-auto pt-24 px-32 py-10 text-center">
+        <h1 className="text-[#1C160C] text-2xl font-bold pb-4">Help & Support</h1>
+        <p className="text-[#4A4A4A] text-lg pb-6">
+          Need assistance? Find answers below or contact us for support.
+        </p>
+
+        {/* FAQ Section */}
+        <div className="text-left max-w-2xl mx-auto">
+          <h2 className="text-lg font-semibold text-[#1C160C] pb-2">Frequently Asked Questions</h2>
+          {[
+            {
+              question: "How do I use the chatbot?",
+              answer: "Simply type your question in the chatbot, and it will provide relevant farming advice.",
+            },
+            {
+              question: "Is there support for regional languages?",
+              answer: "Yes! Our chatbot supports multiple regional languages for better communication.",
+            },
+            {
+              question: "How can I share farming equipment?",
+              answer: "Use the 'Shared Machineries' section to list available equipment or find shared resources.",
+            },
+          ].map((faq, index) => (
+            <div key={index} className="bg-[#F6F3EE] p-4 rounded-lg shadow-md mb-3">
+              <h3 className="font-medium">{faq.question}</h3>
+              <p className="text-sm text-[#4A4A4A] mt-1">{faq.answer}</p>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Testimonials Section */}
-      <div className="max-w-3xl mx-auto mt-6 p-4 bg-white rounded-lg shadow">
-        <h2 className="text-xl font-semibold text-gray-800">What Our Farmers Say</h2>
-        <div className="mt-4 space-y-3">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
-              <p className="text-gray-700 italic">"{testimonial.feedback}"</p>
-              <p className="text-right font-semibold text-green-700">- {testimonial.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+        {/* Contact Form */}
+        <div className="max-w-2xl mx-auto mt-8">
+          <h2 className="text-lg font-semibold text-[#1C160C] pb-2">Contact Us</h2>
+          <form className="bg-[#F6F3EE] p-6 rounded-lg shadow-md">
+            <label className="block text-sm font-medium text-[#1C160C]">Your Name</label>
+            <input
+              type="text"
+              className="w-full p-2 border rounded mt-1 mb-4"
+              placeholder="Enter your name"
+            />
 
-      {/* Contact Support Section */}
-      <div className="max-w-3xl mx-auto mt-6 p-4 bg-white rounded-lg shadow">
-        <h2 className="text-xl font-semibold text-gray-800">Contact Support</h2>
-        <form className="mt-3">
-          <input type="text" placeholder="Your Name" className="w-full p-2 border rounded-lg mb-2" />
-          <input type="email" placeholder="Your Email" className="w-full p-2 border rounded-lg mb-2" />
-          <textarea placeholder="Your Message" className="w-full p-2 border rounded-lg mb-2"></textarea>
-          <button type="submit" className="w-full bg-green-600 text-white p-2 rounded-lg">Send Message</button>
-        </form>
-        <div className="mt-4 text-center text-gray-700">
-          <p><strong>Email:</strong> support@agriplatform.com</p>
-          <p><strong>Contact No:</strong> +91 98765 43210</p>
+            <label className="block text-sm font-medium text-[#1C160C]">Email</label>
+            <input
+              type="email"
+              className="w-full p-2 border rounded mt-1 mb-4"
+              placeholder="Enter your email"
+            />
+
+            <label className="block text-sm font-medium text-[#1C160C]">Your Query</label>
+            <textarea
+              className="w-full p-2 border rounded mt-1 mb-4"
+              rows="4"
+              placeholder="Describe your issue"
+            ></textarea>
+
+            <button
+              type="submit"
+              className="w-full p-2 bg-[#019863] text-white rounded hover:bg-[#017A4F] transition"
+            >
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Help;
