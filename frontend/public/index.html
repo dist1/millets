@@ -5,23 +5,131 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>React App</title>
-    <!--<link rel="stylesheet" href="../css/tailwind.css">-->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      /* 🚀 Hide the Google Translate Top Bar Completely */
+      .goog-te-banner-frame {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
+      }
+
+      /* Hide the iframe that holds the Google Translate bar */
+      body > iframe:nth-of-type(2) {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
+      }
+
+      /* Prevent body shifting */
+      body {
+        position: static !important;
+        top: 0px !important;
+      }
+
+      /* 🔤 Language Selection Button */
+      #translate_icon {
+        position: fixed;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 🌐 Language Icon */
+      #translate_icon img {
+        width: 50px;
+        height: 50px;
+      }
+
+      /* 🔽 Google Translate Dropdown */
+      #google_translate_element {
+        position: fixed;
+        top: 50%;
+        right: 60px;
+        transform: translateY(-50%);
+        z-index: 1000;
+        display: none;
+        background: white;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
-    <!-- Dynamically Load Tailwind CSS -->
-    <script>
+    <!-- 🌐 Marathi "A" Icon Button -->
+    <div id="translate_icon" onclick="toggleTranslate()">
+      <img src="language.png" alt="Marathi A" />
+    </div>
+    
 
+    <!-- Google Translate Dropdown -->
+    <div id="google_translate_element"></div>
+
+    <script>
+      // ✅ Initialize Google Translate with Indian Languages Only
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "hi,kn,ml,mr,ta,te,bn,gu,pa,ur", // ✅ Only Indian Languages
+            autoDisplay: false,
+          },
+          "google_translate_element"
+        );
+      }
+    
+      // ✅ Hide Unwanted Google Translate Elements
+      function removeGoogleTranslateBanner() {
+        const interval = setInterval(() => {
+          const bannerFrame = document.querySelector(".goog-te-banner-frame");
+          const bodyFrame = document.querySelector("body > iframe:nth-of-type(2)");
+    
+          if (bannerFrame) bannerFrame.remove();
+          if (bodyFrame) bodyFrame.remove();
+    
+          document.body.style.top = "0px"; // Prevent UI shift
+        }, 1000);
+      }
+    
+      document.addEventListener("DOMNodeInserted", function (e) {
+        if (e.target.nodeName === "IFRAME" || e.target.classList.contains("goog-te-banner-frame")) {
+          removeGoogleTranslateBanner();
+        }
+      });
+    
+      // ✅ Toggle Translate Dropdown Visibility
+      function toggleTranslate() {
+        var translateDiv = document.getElementById("google_translate_element");
+        translateDiv.style.display =
+          translateDiv.style.display === "none" || translateDiv.style.display === ""
+            ? "block"
+            : "none";
+      }
     </script>
+    
+    <!-- ✅ Load Google Translate API -->
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    
   </body>
 </html>

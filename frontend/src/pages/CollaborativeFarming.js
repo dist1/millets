@@ -21,15 +21,17 @@ const CollaborativeFarming = () => {
   };
 
   return (
-    <div className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-hidden shadow-md"
-      style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}>
+    <div 
+      className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-hidden shadow-md"
+      style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}
+    >
       <div className="layout-container flex h-full grow flex-col">
         
-        {/* Navbar */} {/* Use Header component */}
+        {/* Navbar */}
         <Header activePage="Collab" logoutUser={logoutUser} />
 
-        {/* Main Content */}
-        <div className="layout-container flex h-full grow flex-col overflow-y-auto fade-content pt-10">
+        {/* Main Content - Updated top padding */}
+        <div className="layout-container flex h-full grow flex-col overflow-y-auto fade-content pt-[100px]">
           {/* Collaborative Farming Section */}
           <div className="flex flex-1 flex-col px-32 py-10 text-center">
             <h1 className="text-[#1C160C] text-2xl font-bold pb-4">Collaborative Farming</h1>
