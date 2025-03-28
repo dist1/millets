@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
-import { getGeminiResponse } from "../utils/geminiAPI";
+import { getGeminiResponse, getGeminiResponseWithImage } from "../utils/geminiAPI";
 
 const Home = () => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isRecording, setIsRecording] = useState(false);
+    const [image, setImage] = useState(null);
+
     const chatInputRef = useRef(null);
     const chatContainerRef = useRef(null);
     const lastMessageRef = useRef(null);
@@ -65,20 +67,32 @@ const Home = () => {
 
     const sendMessage = async () => {
         const message = inputValue.trim();
-        if (!message) return;
+        if (!message && !image) return;
 
-        setMessages((prev) => [...prev, { text: message, sender: "user" }]);
+        setMessages((prev) => [...prev, { text: message, sender: "user", image: image?.name }]);
         setInputValue("");
+        setImage(null);
         setIsTyping(true);
 
         try {
-            const aiReply = await getGeminiResponse(message);
+            let aiReply;
+            if (image) {
+                aiReply = await getGeminiResponseWithImage(image, message);
+            } else {
+                aiReply = await getGeminiResponse(message);
+            }
+
             setMessages((prev) => [...prev, { text: aiReply, sender: "ai" }]);
         } catch (error) {
             console.error("AI Error:", error);
         }
 
         setIsTyping(false);
+    };
+
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) setImage(file);
     };
 
     const handleKeyDown = (e) => {
@@ -89,23 +103,14 @@ const Home = () => {
     };
 
     return (
-        <div className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-hidden shadow-md"
+        <div className="relative flex size-full min-h-screen flex-col bg-white overflow-hidden shadow-md"
             style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}>
             <div className="layout-container flex h-full grow flex-col">
-
-                {/* Navbar */}
                 <Header activePage="Chatbot" logoutUser={logoutUser} />
-
-                {/* Chat Section */}
-                <div className="flex-1 flex flex-col px-32 py-4 relative overflow-hidden fade-content pt-16">
+                <div className="flex-1 flex flex-col px-32 py-4 relative overflow-hidden pt-16">
                     <h1 className="text-[#1C160C] text-xl font-bold text-center pb-6 mt-14">Ask me anything about Farming</h1>
-
-                    {/* Chat Messages */}
-                    <div
-                        ref={chatContainerRef}
-                        className="flex-1 overflow-y-auto space-y-4 px-4"
-                        style={{ maxHeight: "calc(100vh - 230px)", paddingBottom: "120px" }}
-                    >
+                    <div ref={chatContainerRef} className="flex-1 overflow-y-auto space-y-4 px-4"
+                        style={{ maxHeight: "calc(100vh - 230px)", paddingBottom: "120px" }}>
                         {messages.map((msg, index) => (
                             <div key={index} ref={index === messages.length - 1 ? lastMessageRef : null} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                                 <div className={`p-4 rounded-lg max-w-md ${msg.sender === "user" ? "bg-[#D1E8D1] text-right" : "bg-[#F6F3EE] text-left"}`}>
@@ -113,45 +118,34 @@ const Home = () => {
                                 </div>
                             </div>
                         ))}
-
                         {isTyping && (
                             <div className="flex justify-start">
-                                <div className="p-4 bg-[#F6F3EE] rounded-lg max-w-md">
-                                    <p className="text-sm text-[#A18249] font-bold">...</p>
+                                <div className="p-3 bg-[#F6F3EE] rounded-lg max-w-md">
+                                    <div className="typing-indicator flex space-x-1">
+                                        <span className="dot bg-[#A18249]"></span>
+                                        <span className="dot bg-[#A18249]"></span>
+                                        <span className="dot bg-[#A18249]"></span>
+                                    </div>
                                 </div>
                             </div>
                         )}
                     </div>
-
-                    {/* Chatbox with Embedded Mic Icon */}
                     <div className="fixed bottom-0 left-0 right-0 bg-white px-32 py-4 flex items-center gap-3 border-t border-gray-200">
-
-                        {/* Chat Input with Mic Inside */}
-                        <div className="relative w-full">
-                            <textarea
-                                ref={chatInputRef}
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                                className="w-full text-sm px-4 py-3 border border-[#E9DFCE] rounded-full focus:outline-none focus:border-blue-500 bg-transparent placeholder:text-[#A18249] shadow-sm resize-none overflow-hidden pr-12"
-                                placeholder="Type or speak your questions..."
-                                rows="1"
-                            ></textarea>
-
-                            {/* Mic Icon Inside Input */}
-                            <button
-                                onClick={toggleVoiceRecognition}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#A18249] hover:text-[#7A6033] transition"
-                            >
-                                {isRecording ? "🎙️" : "🔇"}
-                            </button>
-                        </div>
-
-                        {/* Send Button */}
-                        <button onClick={sendMessage} className="p-2 bg-[#019863] text-white rounded-full shadow-md hover:bg-[#017A4F] transition">
-                            🚀
+                        <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" id="image-upload" />
+                        <label htmlFor="image-upload" className="cursor-pointer p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300 transition">📷</label>
+                        <textarea
+                            ref={chatInputRef}
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            className="w-full text-sm px-4 py-3 border border-[#E9DFCE] rounded-full focus:outline-none bg-transparent placeholder:text-[#A18249] shadow-sm resize-none overflow-hidden"
+                            placeholder="Type or speak your questions..."
+                            rows="1"
+                        ></textarea>
+                        <button onClick={toggleVoiceRecognition} className="p-2 text-[#A18249] hover:text-[#7A6033] transition">
+                            {isRecording ? "🎙️" : "🔇"}
                         </button>
-
+                        <button onClick={sendMessage} className="p-2 bg-[#019863] text-white rounded-full shadow-md hover:bg-[#017A4F] transition">🚀</button>
                     </div>
                 </div>
             </div>
