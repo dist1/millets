@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ProfileDropdown from "../components/ProfileDropdown"; // Adjust the path as needed
+import ProfileDropdown from "../components/ProfileDropdown";
 import Header from "../components/Header";
+
 const CollaborativeFarming = () => {
   const navigate = useNavigate();
 
@@ -69,71 +70,56 @@ const CollaborativeFarming = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-white overflow-hidden rounded-lg shadow-md" style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}>
-      {/* Include Header */}
-      <Header activePage="Collab" logoutUser={() => {}} /> {/* Pass activePage as 'Shared' */}
+    <div className="relative flex min-h-screen flex-col bg-white overflow-hidden shadow-md" style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}>
+      <Header activePage="Collab" logoutUser={logoutUser} />
       <div className="p-8 bg-gray-100 min-h-screen">
         <h1 className="text-3xl font-bold text-green-700 mb-6 text-center mt-12">
           Collaborative Farming - India
         </h1>
 
+        {/* Discussion Forum */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Discussion Forum
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Discussion Forum</h2>
           {dummyDiscussions.map((discussion) => (
             <div key={discussion._id} className="border p-4 mt-4 rounded-lg shadow-sm">
-              <h3 className="font-semibold text-lg text-green-600 mb-2">
-                {discussion.title}
-              </h3>
+              <h3 className="font-semibold text-lg text-green-600 mb-2">{discussion.title}</h3>
               <p className="text-gray-700">{discussion.content}</p>
             </div>
           ))}
         </div>
 
+        {/* Project Collaboration */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Project Collaboration
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Project Collaboration</h2>
           {dummyProjects.map((project) => (
             <div key={project._id} className="border p-4 mt-4 rounded-lg shadow-sm">
-              <h3 className="font-semibold text-lg text-blue-600 mb-2">
-                {project.name}
-              </h3>
+              <h3 className="font-semibold text-lg text-blue-600 mb-2">{project.name}</h3>
               <p className="text-gray-700 mb-4">{project.details}</p>
-              <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full">
-                Join Project
-              </button>
+              <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full">Join Project</button>
             </div>
           ))}
         </div>
 
+        {/* Success Stories */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Success Stories
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Success Stories</h2>
           {dummySuccessStories.map((story) => (
             <div key={story._id} className="border p-4 mt-4 rounded-lg shadow-sm flex">
               <img src={story.imageUrl} alt={story.title} className="w-1/3 mr-4 rounded-lg" />
               <div className="w-2/3">
-                <h3 className="font-semibold text-lg text-yellow-600 mb-2">
-                  {story.title}
-                </h3>
+                <h3 className="font-semibold text-lg text-yellow-600 mb-2">{story.title}</h3>
                 <p className="text-gray-700">{story.content}</p>
               </div>
             </div>
           ))}
         </div>
 
+        {/* Resources */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Resources
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Resources</h2>
           {dummyResources.map((resource) => (
             <div key={resource._id} className="border p-4 mt-4 rounded-lg shadow-sm">
-              <h3 className="font-semibold text-lg text-indigo-600 mb-2">
-                {resource.title}
-              </h3>
+              <h3 className="font-semibold text-lg text-indigo-600 mb-2">{resource.title}</h3>
               <p className="text-gray-700 mb-2">{resource.details}</p>
               {resource.fileUrl && (
                 <a href={resource.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500">Download PDF</a>

@@ -6,47 +6,64 @@ const Home = () => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const [isRecording, setIsRecording] = useState(false);
     const [image, setImage] = useState(null);
+
     const chatInputRef = useRef(null);
     const chatContainerRef = useRef(null);
     const lastMessageRef = useRef(null);
     const storedUsername = localStorage.getItem("username");
+    const recognitionRef = useRef(null);
 
     useEffect(() => {
         if (!storedUsername) {
             window.location.href = "/";
         }
 
-        const profileBtn = document.getElementById("profile-btn");
-        const profileMenu = document.getElementById("profile-menu");
-        const profileUsername = document.getElementById("profile-username");
+        if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognitionRef.current = new SpeechRecognition();
+            recognitionRef.current.continuous = false;
+            recognitionRef.current.interimResults = false;
+            recognitionRef.current.lang = "en-US";
 
-        if (profileBtn && profileMenu && profileUsername) {
-            profileUsername.textContent = storedUsername || "User";
+            recognitionRef.current.onstart = () => setIsRecording(true);
+            recognitionRef.current.onend = () => setIsRecording(false);
 
-            profileBtn.addEventListener("click", (event) => {
-                event.stopPropagation();
-                alert(`Logged in as: ${storedUsername}`);
-            });
+            recognitionRef.current.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                setInputValue(transcript);
+            };
 
-            document.addEventListener("click", (event) => {
-                if (!profileMenu.contains(event.target) && event.target.id !== "profile-btn") {
-                    profileMenu.classList.add("hidden");
-                }
-            });
+            recognitionRef.current.onerror = (event) => {
+                console.error("Speech Recognition Error:", event.error);
+                setIsRecording(false);
+            };
         }
     }, [storedUsername]);
+
+    useEffect(() => {
+        if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+    }, [messages, isTyping]);
 
     const logoutUser = () => {
         localStorage.removeItem("username");
         window.location.href = "/";
     };
 
-    useEffect(() => {
-        if (lastMessageRef.current) {
-            lastMessageRef.current.scrollIntoView({ behavior: "instant", block: "nearest" });
+    const toggleVoiceRecognition = () => {
+        if (recognitionRef.current) {
+            if (isRecording) {
+                recognitionRef.current.stop();
+            } else {
+                recognitionRef.current.start();
+            }
+        } else {
+            alert("Speech recognition is not supported in this browser.");
         }
-    }, [messages, isTyping]);
+    };
 
     const sendMessage = async () => {
         const message = inputValue.trim();
@@ -64,6 +81,7 @@ const Home = () => {
             } else {
                 aiReply = await getGeminiResponse(message);
             }
+
             setMessages((prev) => [...prev, { text: aiReply, sender: "ai" }]);
         } catch (error) {
             console.error("AI Error:", error);
@@ -85,33 +103,21 @@ const Home = () => {
     };
 
     return (
-        <div className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-hidden shadow-md"
+        <div className="relative flex size-full min-h-screen flex-col bg-white overflow-hidden shadow-md"
             style={{ fontFamily: "Epilogue, Noto Sans, sans-serif" }}>
             <div className="layout-container flex h-full grow flex-col">
-
-                {/* Navbar */}
                 <Header activePage="Chatbot" logoutUser={logoutUser} />
-
-                {/* Chat Section */}
-                <div className="flex-1 flex flex-col px-32 py-4 relative overflow-hidden fade-content pt-16">
-                    <h1 className="text-[#1C160C] text-xl font-bold text-center pb-6 mt-6">Ask me anything about Farming</h1>
-
-                    {/* Chat Messages */}
-                    <div
-                        ref={chatContainerRef}
-                        className="flex-1 overflow-y-auto space-y-4 px-4"
+                <div className="flex-1 flex flex-col px-32 py-4 relative overflow-hidden pt-16">
+                    <h1 className="text-[#1C160C] text-xl font-bold text-center pb-6 mt-14">Ask me anything about Farming</h1>
+                    <div ref={chatContainerRef} className="flex-1 overflow-y-auto space-y-4 px-4"
                         style={{ maxHeight: "calc(100vh - 230px)", paddingBottom: "120px" }}>
                         {messages.map((msg, index) => (
-                            <div key={index} ref={index === messages.length - 1 ? lastMessageRef : null}
-                                className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
+                            <div key={index} ref={index === messages.length - 1 ? lastMessageRef : null} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                                 <div className={`p-4 rounded-lg max-w-md ${msg.sender === "user" ? "bg-[#D1E8D1] text-right" : "bg-[#F6F3EE] text-left"}`}>
                                     <p className="text-sm text-[#1C160C] leading-tight whitespace-pre-wrap">{msg.text}</p>
-                                    {msg.image && <p className="text-xs text-gray-500">📎 {msg.image}</p>}
                                 </div>
                             </div>
                         ))}
-
-                        {/* Typing Indicator */}
                         {isTyping && (
                             <div className="flex justify-start">
                                 <div className="p-3 bg-[#F6F3EE] rounded-lg max-w-md">
@@ -124,60 +130,25 @@ const Home = () => {
                             </div>
                         )}
                     </div>
-
-                    {/* Chatbox */}
                     <div className="fixed bottom-0 left-0 right-0 bg-white px-32 py-4 flex items-center gap-3 border-t border-gray-200">
-                        {/* Image Upload Button */}
                         <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" id="image-upload" />
-                        <label htmlFor="image-upload" className="cursor-pointer p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300 transition">
-                            📷
-                        </label>
-
+                        <label htmlFor="image-upload" className="cursor-pointer p-2 bg-gray-200 rounded-full shadow-md hover:bg-gray-300 transition">📷</label>
                         <textarea
                             ref={chatInputRef}
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            className="w-full text-sm px-4 py-3 border border-[#E9DFCE] rounded-full focus:outline-none focus:border-blue-500 bg-transparent placeholder:text-[#A18249] shadow-sm resize-none overflow-hidden"
-                            placeholder="Type your questions here..."
+                            className="w-full text-sm px-4 py-3 border border-[#E9DFCE] rounded-full focus:outline-none bg-transparent placeholder:text-[#A18249] shadow-sm resize-none overflow-hidden"
+                            placeholder="Type or speak your questions..."
                             rows="1"
                         ></textarea>
-
-                        <button onClick={sendMessage} className="p-2 bg-[#019863] text-white rounded-full shadow-md hover:bg-[#017A4F] transition">
-                            🚀
+                        <button onClick={toggleVoiceRecognition} className="p-2 text-[#A18249] hover:text-[#7A6033] transition">
+                            {isRecording ? "🎙️" : "🔇"}
                         </button>
+                        <button onClick={sendMessage} className="p-2 bg-[#019863] text-white rounded-full shadow-md hover:bg-[#017A4F] transition">🚀</button>
                     </div>
                 </div>
             </div>
-
-            {/* Typing Indicator CSS */}
-            <style>
-                {`
-                .typing-indicator .dot {
-                    width: 8px;
-                    height: 8px;
-                    border-radius: 50%;
-                    display: inline-block;
-                    animation: typing 1.5s infinite;
-                }
-
-                .typing-indicator .dot:nth-child(1) {
-                    animation-delay: 0s;
-                }
-                .typing-indicator .dot:nth-child(2) {
-                    animation-delay: 0.2s;
-                }
-                .typing-indicator .dot:nth-child(3) {
-                    animation-delay: 0.4s;
-                }
-
-                @keyframes typing {
-                    0% { transform: scale(1); opacity: 0.3; }
-                    50% { transform: scale(1.2); opacity: 1; }
-                    100% { transform: scale(1); opacity: 0.3; }
-                }
-                `}
-            </style>
         </div>
     );
 };
