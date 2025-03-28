@@ -1,0 +1,263 @@
+[
+    {
+      "id": 1,
+      "name": "PM-Kisan Samman Nidhi",
+      "shortName": "PM-KISAN",
+      "description": "A central sector scheme providing financial support to farmers.",
+      "eligibility": "All landholding farmer families with cultivable land.",
+      "benefits": [
+        "₹6,000 annual income support in three equal installments",
+        "Direct transfer to farmers' bank accounts",
+        "Covers small and marginal farmers"
+      ],
+      "link": "https://pmkisan.gov.in/"
+    },
+    {
+      "id": 2,
+      "name": "Agriculture Infrastructure Fund",
+      "shortName": "AIF",
+      "description": "A scheme providing medium to long-term debt financing for agricultural infrastructure.",
+      "eligibility": "Farmers, FPOs, PACS, marketing cooperatives, startups, and central/state agencies.",
+      "benefits": [
+        "Financial support for post-harvest management and community farming assets",
+        "Interest subvention and credit guarantee support",
+        "Loan tenure up to 7 years"
+      ],
+      "link": "https://agriinfra.dac.gov.in/"
+    },
+    {
+      "id": 3,
+      "name": "Agricultural Technology Management Agency",
+      "shortName": "ATMA",
+      "description": "A scheme for strengthening agricultural extension services through decentralized, participatory approaches.",
+      "eligibility": "All farmers across India.",
+      "benefits": [
+        "Capacity building of farmers through training and demonstrations",
+        "Support for farmer groups and cooperatives",
+        "Promotion of innovative farming techniques"
+      ],
+      "link": "../Documents/ATMA-Guidelines%202018.pdf"
+    },
+    {
+      "id": 4,
+      "name": "AGMARKNET",
+      "shortName": "AGMARKNET",
+      "description": "A scheme to link agricultural markets and disseminate real-time market information.",
+      "eligibility": "Farmers, traders, and market stakeholders.",
+      "benefits": [
+        "Provides daily market prices and arrivals",
+        "Enhances transparency in agricultural trade",
+        "Helps farmers get better prices for their produce"
+      ],
+      "link": "../Documents/Agmarknet_Guidelines.pdf"
+    },
+    {
+      "id": 5,
+      "name": "Mission for Integrated Development of Horticulture",
+      "shortName": "MIDH",
+      "description": "A scheme promoting holistic growth of the horticulture sector.",
+      "eligibility": "Horticulture farmers and stakeholders.",
+      "benefits": [
+        "Financial assistance for horticulture development",
+        "Promotion of organic farming",
+        "Support for post-harvest management and value addition"
+      ],
+      "link": "../Documents/midh_Guidelines.pdf"
+    },
+    {
+      "id": 6,
+      "name": "Online Pesticide Registration",
+      "shortName": "OPR",
+      "description": "A system for online registration of pesticides to ensure safety and compliance.",
+      "eligibility": "Pesticide manufacturers and traders.",
+      "benefits": [
+        "Ensures regulatory compliance",
+        "Enhances transparency in pesticide registration",
+        "Reduces processing time"
+      ],
+      "link": "../Documents/Online_Pesticide_Registration.pdf"
+    },
+    {
+      "id": 7,
+      "name": "Plant Quarantine Clearance",
+      "shortName": "PQC",
+      "description": "A regulatory mechanism to prevent the introduction of exotic pests and diseases.",
+      "eligibility": "Importers and exporters of agricultural commodities.",
+      "benefits": [
+        "Prevents the spread of plant diseases",
+        "Ensures food security",
+        "Regulates import and export of plants"
+      ],
+      "link": "../Documents/Plant_Quarantine_Clearance.pdf"
+    },
+    {
+      "id": 8,
+      "name": "Direct Benefit Transfer in Agriculture",
+      "shortName": "DBT-Agriculture",
+      "description": "A Direct Benefit Transfer system to ensure financial benefits reach farmers directly.",
+      "eligibility": "Eligible farmers for government subsidy schemes.",
+      "benefits": [
+        "Prevents leakage of funds",
+        "Ensures timely and transparent fund transfer",
+        "Reduces dependency on intermediaries"
+      ],
+      "link": "https://agrimachinery.nic.in/index/index"
+    },
+    {
+      "id": 9,
+      "name": "Pradhan Mantri Krishi Sinchayee Yojana",
+      "shortName": "PMKSY",
+      "description": "A scheme to improve irrigation efficiency and ensure water security for farming.",
+      "eligibility": "All farmers, including small and marginal farmers.",
+      "benefits": [
+        "Ensures water availability for farms",
+        "Promotes water conservation techniques",
+        "Financial assistance for micro-irrigation systems"
+      ],
+      "link": "https://www.pmksy.gov.in/"
+    },
+    {
+      "id": 10,
+      "name": "Kisan Call Center",
+      "shortName": "KCC",
+      "description": "A toll-free helpline providing real-time agricultural information and support.",
+      "eligibility": "All farmers across India.",
+      "benefits": [
+        "24/7 support for farmers",
+        "Expert advice on farming techniques",
+        "Weather and market updates"
+      ],
+      "link": "https://mkisan.gov.in/"
+    },
+    {
+      "id": 11,
+      "name": "e-NAM",
+      "shortName": "e-NAM",
+      "description": "An online trading platform for agricultural commodities to create a unified market.",
+      "eligibility": "Farmers, traders, and market stakeholders.",
+      "benefits": [
+        "Transparent price discovery",
+        "Eliminates middlemen in agricultural trade",
+        "Online trading for better access to markets"
+      ],
+      "link": "https://www.enam.gov.in/web/"
+    },
+    {
+      "id": 12,
+      "name": "Kisan Credit Card Scheme",
+      "shortName": "KCC",
+      "description": "A credit scheme to provide short-term loans to farmers for agricultural and related expenses.",
+      "eligibility": "All farmers engaged in agricultural activities.",
+      "benefits": [
+        "Easy access to short-term credit for agriculture",
+        "Low interest rates on loans",
+        "Flexible repayment options"
+      ],
+      "link": "https://www.pmkisan.gov.in/"
+    },
+    {
+      "id": 13,
+      "name": "National Mission for Sustainable Agriculture",
+      "shortName": "NMSA",
+      "description": "A scheme to promote sustainable agricultural practices in response to climate change.",
+      "eligibility": "All farmers practicing agriculture.",
+      "benefits": [
+        "Encourages climate-resilient agriculture",
+        "Supports soil and water conservation",
+        "Provides financial aid for sustainable farming"
+      ],
+      "link": "https://nmsa.dac.gov.in/"
+    },
+    {
+      "id": 14,
+      "name": "Paramparagat Krishi Vikas Yojana",
+      "shortName": "PKVY",
+      "description": "A scheme promoting organic farming through cluster-based approaches.",
+      "eligibility": "Organic farmers and farmer groups.",
+      "benefits": [
+        "Financial support for organic farming clusters",
+        "Encourages eco-friendly farming practices",
+        "Marketing assistance for organic produce"
+      ],
+      "link": "https://www.myscheme.gov.in/schemes/pkvy"
+    },
+    {
+      "id": 15,
+      "name": "Pradhan Mantri Fasal Bima Yojana",
+      "shortName": "PMFBY",
+      "description": "A crop insurance scheme providing financial support against crop failure.",
+      "eligibility": "All farmers, including sharecroppers and tenant farmers growing notified crops in the notified areas.",
+      "benefits": [
+        "Comprehensive risk coverage for pre-sowing to post-harvest losses",
+        "Low premium rates for farmers",
+        "Use of technology for quick claim settlement"
+      ],
+      "link": "https://pmfby.gov.in/"
+    },
+    {
+        "id": 16,
+        "name": "Soil Health Card Scheme",
+        "shortName": "SHC",
+        "description": "A scheme to promote balanced use of fertilizers for better soil health.",
+        "eligibility": "All farmers across India.",
+        "benefits": [
+          "Provides soil health reports to farmers",
+          "Recommends nutrients for better crop yield",
+          "Encourages sustainable farming practices"
+        ],
+        "link": "https://soilhealth.dac.gov.in/home"
+      },
+      {
+        "id": 17,
+        "name": "Rashtriya Krishi Vikas Yojana",
+        "shortName": "RKVY",
+        "description": "A scheme to ensure holistic development of agriculture and allied sectors.",
+        "eligibility": "State governments, UTs, and farmers engaged in agriculture.",
+        "benefits": [
+          "Financial assistance for innovative farming practices",
+          "Support for research and development in agriculture",
+          "Encourages agri-entrepreneurship"
+        ],
+        "link": "https://agriwelfare.gov.in/en/RashtriyaDiv"
+      },
+      {
+        "id": 18,
+        "name": "National Food Security Mission",
+        "shortName": "NFSM",
+        "description": "A mission to increase production of rice, wheat, pulses, and coarse cereals.",
+        "eligibility": "Farmers growing targeted crops in identified districts.",
+        "benefits": [
+          "Financial assistance for high-yield seed varieties",
+          "Promotes sustainable farming techniques",
+          "Encourages mechanization and modern tools"
+        ],
+        "link": "https://www.nfsm.gov.in/"
+      },
+      {
+        "id": 19,
+        "name": "Dairy Entrepreneurship Development Scheme",
+        "shortName": "DEDS",
+        "description": "A scheme to promote self-employment in the dairy sector.",
+        "eligibility": "Individual farmers, SHGs, NGOs, and dairy cooperatives.",
+        "benefits": [
+          "Financial aid for dairy farming",
+          "Encourages production and processing of milk",
+          "Support for cold storage and marketing"
+        ],
+        "link": "https://www.india.gov.in/dairy-entrepreneurship-development-scheme"
+      },
+      {
+        "id": 20,
+        "name": "Pradhan Mantri Kisan Maan Dhan Yojana",
+        "shortName": "PM-KMY",
+        "description": "A pension scheme for small and marginal farmers to ensure financial security post-retirement.",
+        "eligibility": "Farmers aged 18-40 years with landholding up to 2 hectares.",
+        "benefits": [
+          "Provides a monthly pension of ₹3,000 after 60 years",
+          "Government contribution equal to farmer’s contribution",
+          "Ensures financial security for aging farmers"
+        ],
+        "link": "https://pmkmy.gov.in/"
+      }
+  ]
+  
