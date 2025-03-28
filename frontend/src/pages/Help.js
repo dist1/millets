@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
-const Help = () => {
-  const navigate = useNavigate();
+const faqs = [
+  { question: "How can I check soil quality?", answer: "You can use our AI tool to analyze soil samples and get detailed recommendations." },
+  { question: "What crops are best for my region?", answer: "Our AI-powered recommendation system suggests the best crops based on weather, soil, and market trends." },
+  { question: "How do I apply for government farming schemes?", answer: "Visit the government portal or check our chatbot for scheme eligibility and application details." },
+  { question: "How can I prevent pest infestations?", answer: "Regularly monitor crops, use organic pesticides, and follow crop rotation methods." },
+  { question: "What irrigation methods are best for small farms?", answer: "Drip irrigation and sprinkler systems are effective for conserving water while maintaining crop health." },
+  { question: "Where can I get high-quality seeds?", answer: "Check with certified agricultural suppliers or government-approved seed banks for quality seeds." }
+];
 
-  useEffect(() => {
-    // Redirect to login if user is not authenticated
-    const storedUsername = localStorage.getItem("username");
-    if (!storedUsername) {
-      navigate("/");
-    }
-  }, [navigate]);
+const testimonials = [
+  { name: "Rajesh Kumar", feedback: "The AI-powered farming tool helped me choose the right crops and increased my yield!" },
+  { name: "Suman Patel", feedback: "I love how easy it is to get accurate soil analysis reports using this platform." },
+  { name: "Amit Verma", feedback: "The FAQs and farming tips have been a game changer for my farm!" }
+];
 
-  const logoutUser = () => {
-    localStorage.removeItem("username");
-    navigate("/");
+export default function HelpSupport() {
+  const [openFAQ, setOpenFAQ] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setOpenFAQ(openFAQ === index ? null : index);
   };
 
   return (
