@@ -1,4 +1,5 @@
 # 🌾 Millets – AI-Powered Farmer Support Platform
+![image](https://github.com/user-attachments/assets/17d6a528-b93e-4611-a3a5-eff2e71499ab)
 
 Millets is an AI-powered, multilingual platform designed to transform the agricultural landscape by empowering farmers with intelligent tools, personalized insights, and a collaborative community. Built with a strong emphasis on accessibility, sustainability, and real-world problem-solving, Millets leverages AI/ML technologies to assist farmers in making informed decisions.
 
